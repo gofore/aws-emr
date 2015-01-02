@@ -3,8 +3,6 @@
 
 Ville Seppänen [@Vilsepi](https://twitter.com/Vilsepi) | Jari Voutilainen [@Zharktas](https://twitter.com/Zharktas) | [@GoforeOy](https://twitter.com/GoforeOy)
 
-
-
 ---
 
 ## Agenda
@@ -39,14 +37,33 @@ All presentation material is available at [https://github.com/gofore/aws-emr](ht
 
 --
 
-Cluster Configuration: name, logging
-Tags: keywords for the cluster
-Software Configuration: Hadoop version, Hive, Pig, HBase, Ganglia...
-File System Configuration: EMRFS file encryption, consistency
-Hardware Configuration: master, code and task nodes
-Security and Access: ssh keys, node access roles
-Bootstrap Actions: scripts to initialize the cluster
-Steps: a queue of jobs of the cluster
+- Cluster Configuration: name, logging
+- Tags: keywords for the cluster
+- Software Configuration: Hadoop version, Hive, Pig, HBase, Ganglia...
+- File System Configuration: EMRFS file encryption, consistency
+- Hardware Configuration: master, code and task nodes
+- Security and Access: ssh keys, node access roles
+- Bootstrap Actions: scripts to initialize the cluster
+- Steps: a queue of jobs of the cluster
+
+--
+
+## [WordSplitter.py](https://s3.amazonaws.com/elasticmapreduce/samples/wordcount/wordSplitter.py)
+
+<pre><code data-trim="" class="java">
+#!/usr/bin/python
+import sys
+import re
+
+def main(argv):
+    pattern = re.compile("[a-zA-Z][a-zA-Z0-9]*")
+    for line in sys.stdin:
+        for word in pattern.findall(line):
+            print "LongValueSum:" + word.lower() + "\t" + "1"
+
+if __name__ == "__main__":
+    main(sys.argv)
+</code></pre>
 
 ---
 
@@ -56,30 +73,14 @@ Steps: a queue of jobs of the cluster
 
 [Digitraffic](http://www.infotripla.fi/digitraffic/doku.php?id=start_en) is a service offering real time information and data about the traffic, weather and condition information on the Finnish main roads.
 
-The service is provided by the [Finnish Transport Agency](http://www.liikennevirasto.fi).
+The service is provided by the [Finnish Transport Agency](http://www.liikennevirasto.fi), and produced by [Gofore](http://gofore.com) and [Infotripla](http://infotripla.fi).
 
 --
 
-```
-<ivjtdata duration="60" periodstart="2014-06-24T02:55:00Z">
-  <recognitions>
-    <link id="110302" data_source="1">
-      <recognition offset_seconds="8" travel_time="152"></recognition>
-      <recognition offset_seconds="36" travel_time="155"></recognition>
-    </link>
-    <link id="410102" data_source="1">
-      <recognition offset_seconds="6" travel_time="126"></recognition>
-      <recognition offset_seconds="45" travel_time="152"></recognition>
-    </link>
-    <link id="810502" data_source="1">
-      <recognition offset_seconds="25" travel_time="66"></recognition>
-      <recognition offset_seconds="34" travel_time="79"></recognition>
-      <recognition offset_seconds="35" travel_time="67"></recognition>
-      <recognition offset_seconds="53" travel_time="58"></recognition>
-    </link>
-  </recognitions>
-</ivjtdata>
-```
+## Traffic fluency
+
+- Our data consists of traffic fluency information, i.e. how quickly vehicles have been identified to pass through a road segment (*a link*).
+- Data is gathered with camera-based [Automatic License Plate Recognition (ALPR)](http://en.wikipedia.org/wiki/Automatic_number_plate_recognition), and more recently with mobile-device-based [Floating Car Data (FCD)](http://en.wikipedia.org/wiki/Floating_car_data).
 
 --
 
@@ -107,3 +108,38 @@ The service is provided by the [Finnish Transport Agency](http://www.liikennevir
 [Static link information](http://www.infotripla.fi/digitraffic/lib/exe/fetch.php?tok=a8263d&media=http%3A%2F%2Fwww.infotripla.fi%2Fdigitraffic%2Fdocs%2FLocationData.XML)
 
 Links are one-way
+
+--
+
+```
+<ivjtdata duration="60" periodstart="2014-06-24T02:55:00Z">
+  <recognitions>
+    <link id="110302" data_source="1">
+      <recognition offset_seconds="8" travel_time="152"></recognition>
+      <recognition offset_seconds="36" travel_time="155"></recognition>
+    </link>
+    <link id="410102" data_source="1">
+      <recognition offset_seconds="6" travel_time="126"></recognition>
+      <recognition offset_seconds="45" travel_time="152"></recognition>
+    </link>
+    <link id="810502" data_source="1">
+      <recognition offset_seconds="25" travel_time="66"></recognition>
+      <recognition offset_seconds="34" travel_time="79"></recognition>
+      <recognition offset_seconds="35" travel_time="67"></recognition>
+      <recognition offset_seconds="53" travel_time="58"></recognition>
+    </link>
+  </recognitions>
+</ivjtdata>
+```
+
+Each file contains finished passthroughs for each road segment during one minute.
+
+--
+
+## Some numbers
+
+- x Links (road segments)
+- x files
+- x file size compressed/uncompressed
+- x timespan
+- x number of observations/recognitions

@@ -49,7 +49,7 @@ The service is provided by the [Finnish Transport Agency](http://www.liikennevir
 
 --
 
-<pre><code data-trim="" class="xml">
+```
 <ivjtdata duration="60" periodstart="2014-06-24T02:55:00Z">
   <recognitions>
     <link id="110302" data_source="1">
@@ -68,7 +68,7 @@ The service is provided by the [Finnish Transport Agency](http://www.liikennevir
     </link>
   </recognitions>
 </ivjtdata>
-</code></pre>
+```
 
 --
 
@@ -79,7 +79,6 @@ The service is provided by the [Finnish Transport Agency](http://www.liikennevir
 --
 
 ```
-<pre><code data-trim="" class="xml">
 <link>
   <linkno>310102</linkno>
   <startsite>1108</startsite>
@@ -92,7 +91,6 @@ The service is provided by the [Finnish Transport Agency](http://www.liikennevir
     <unit>m</unit>
   </distance>
 </link>
-</code></pre>
 ```
 
 [Static link information](http://www.infotripla.fi/digitraffic/lib/exe/fetch.php?tok=a8263d&media=http%3A%2F%2Fwww.infotripla.fi%2Fdigitraffic%2Fdocs%2FLocationData.XML)

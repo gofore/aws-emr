@@ -37,6 +37,17 @@ All presentation material is available at [https://github.com/gofore/aws-emr](ht
 
 [The endlessly fascinating example of counting words in Hadoop](http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-get-started-count-words.html)
 
+--
+
+Cluster Configuration: name, logging
+Tags: keywords for the cluster
+Software Configuration: Hadoop version, Hive, Pig, HBase, Ganglia...
+File System Configuration: EMRFS file encryption, consistency
+Hardware Configuration: master, code and task nodes
+Security and Access: ssh keys, node access roles
+Bootstrap Actions: scripts to initialize the cluster
+Steps: a queue of jobs of the cluster
+
 ---
 
 # Our dataset

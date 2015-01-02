@@ -139,7 +139,28 @@ Each file contains finished passthroughs for each road segment during one minute
 ## Some numbers
 
 - x Links (road segments)
-- x files
+- x XML files
 - x file size compressed/uncompressed
 - x timespan
 - x number of observations/recognitions
+
+---
+
+# Prerequisites
+
+--
+
+## Uploading the data to Amazon S3
+
+Data was given as monthly tar.gz archive files. We unpack the data and use AWS CLI tools to upload the XML files to S3.
+
+--
+
+## Parsing XML with Hadoop Streaming
+
+By default, Hadoop Streaming splits work by newlines, but we need to split based on XML objects.
+
+- [Hadoop Tutorial 2.1 -- Streaming XML Files](http://cs.smith.edu/dftwiki/index.php/Hadoop_Tutorial_2.1_--_Streaming_XML_Files)
+- Hadoop Streaming docs: [How do I parse XML documents using streaming?](http://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/HadoopStreaming.html#How_do_I_parse_XML_documents_using_streaming)
+- [Processing XML With Hadoop Streaming](http://davidvhill.com/article/processing-xml-with-hadoop-streaming)
+

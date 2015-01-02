@@ -78,6 +78,23 @@ The service is provided by the [Finnish Transport Agency](http://www.liikennevir
 
 --
 
+```
+<pre><code data-trim="" class="xml">
+<link>
+  <linkno>310102</linkno>
+  <startsite>1108</startsite>
+  <endsite>1107</endsite>
+  <name language="en">Hallila -> Kaukajärvi</name>
+  <name language="fi">Hallila -> Kaukajärvi</name>
+  <name language="sv">Hallila -> Kaukajärvi</name>
+  <distance>
+    <value>3875.000</value>
+    <unit>m</unit>
+  </distance>
+</link>
+</code></pre>
+```
+
 [Static link information](http://www.infotripla.fi/digitraffic/lib/exe/fetch.php?tok=a8263d&media=http%3A%2F%2Fwww.infotripla.fi%2Fdigitraffic%2Fdocs%2FLocationData.XML)
 
 Links are one-way

@@ -1,3 +1,4 @@
 credentials.csv
 *.pem
+*.ppk
 .vagrant

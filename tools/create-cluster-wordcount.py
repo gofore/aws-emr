@@ -31,13 +31,13 @@ steps.append(boto.emr.step.StreamingStep(
 # For newer Hadoop, use 3.3.1 and m1.medium or m3.xlarge
 instance_groups = []
 instance_groups.append(InstanceGroup(
-    name="Main node"
+    name="Main node",
     role="MASTER",
     num_instances=1,
     type="m1.small",
     market="ON_DEMAND"))
 instance_groups.append(InstanceGroup(
-    name="Worker nodes"
+    name="Worker nodes",
     role="CORE",
     num_instances=2,
     type="m1.small",

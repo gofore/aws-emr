@@ -27,7 +27,7 @@ All presentation material is available at [https://github.com/gofore/aws-emr](ht
 
 ---
 
-# EMR demo
+# Quick EMR demo
 
 --
 
@@ -64,6 +64,16 @@ def main(argv):
 if __name__ == "__main__":
     main(sys.argv)
 </code></pre>
+
+--
+
+## Filesystems
+
+- EMRFS and Hadoop
+- S3 and S3n
+- S3 is not a file system
+
+http://wiki.apache.org/hadoop/AmazonS3
 
 ---
 
@@ -164,3 +174,10 @@ By default, Hadoop Streaming splits work by newlines, but we need to split based
 - Hadoop Streaming docs: [How do I parse XML documents using streaming?](http://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/HadoopStreaming.html#How_do_I_parse_XML_documents_using_streaming)
 - [Processing XML With Hadoop Streaming](http://davidvhill.com/article/processing-xml-with-hadoop-streaming)
 
+---
+
+# Summary
+
+--
+
+[AWS EMR Best practices](https://media.amazonwebservices.com/AWS_Amazon_EMR_Best_Practices.pdf)

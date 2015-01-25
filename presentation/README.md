@@ -149,7 +149,7 @@ Each file contains finished passthroughs for each road segment during one minute
 ## Some numbers
 
 - x Links (road segments)
-- x XML files
+- 525600 XML files per year
 - x file size compressed/uncompressed
 - x timespan
 - x number of observations/recognitions
@@ -166,9 +166,16 @@ Data was given as monthly tar.gz archive files. We unpack the data and use AWS C
 
 --
 
-## Parsing XML with Hadoop Streaming
+## The small files problem
 
-By default, Hadoop Streaming splits work by newlines, but we need to split based on XML objects.
+- We have approximately 4 million files.
+- "Small files are a big problem in Hadoop" [1](http://blog.cloudera.com/blog/2009/02/the-small-files-problem/)[2](http://amilaparanawithana.blogspot.fi/2012/06/small-file-problem-in-hadoop.html)[3](http://www.idryman.org/blog/2013/09/22/process-small-files-on-hadoop-using-combinefileinputformat-1/)
+- Concatenate data into bigger chunks
+
+
+--
+
+## Parsing XML with Hadoop Streaming
 
 - [Hadoop Tutorial 2.1 -- Streaming XML Files](http://cs.smith.edu/dftwiki/index.php/Hadoop_Tutorial_2.1_--_Streaming_XML_Files)
 - Hadoop Streaming docs: [How do I parse XML documents using streaming?](http://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/HadoopStreaming.html#How_do_I_parse_XML_documents_using_streaming)

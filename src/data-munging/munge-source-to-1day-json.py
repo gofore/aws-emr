@@ -65,6 +65,7 @@ def combine_and_upload(root_input_path, output_path, s3_bucket):
         matches = path_pattern.findall(directory)
         if matches:
             date = "-".join(matches[0])
+            # TODO: We should probably sort 'files' here, otherwise data ends up in random order
             _upload_data_to_s3(_parse_xml_files(files, directory), output_path+date+".json", s3_bucket)
 
 if __name__ == "__main__":

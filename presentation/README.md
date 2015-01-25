@@ -155,6 +155,18 @@ Each file contains finished passthroughs for each road segment during one minute
 
 ---
 
+# Research questions
+
+--
+
+1. Does winter time have less recognitions (either due to less cars or snowy plates)?
+2. Do people drive faster during the night?
+3. How well number of recognitions correlate with speed (rush hour probably slows travel, but are speeds higher during days with less traffic)?
+4. Is it possible to identify speed limits from the travel times? How much dispersion in speeds?
+5. When do speed limits change (winter and summer limits)?
+
+---
+
 # Prerequisites
 
 --

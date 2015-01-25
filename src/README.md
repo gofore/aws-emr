@@ -4,11 +4,11 @@
 - **Data-munging:** Contains manual tools (mainly in EC2 and uploading to S3) to pre-munge the data before EMR. If the munging is complicated, it should obviously be done with EMR.
 - **Example-data:** Contains small snippets of input test data for local development.
 - **Streaming-programs:** Contains only Python scripts that are fully compatible to be run as Hadoop Streaming programs (as mappers, reducers etc).
-- **sync-to-s3.sh:** A script that synchronizes ALL files under `src/` to S3. Run this to make your streaming program available to EMR.
+- **sync-to-s3.sh:** A script that synchronizes all files under current directory to S3 (except for files under `temp/` where you can put your local-only files). Run this to make your streaming program available to EMR.
 
 ## Prerequisites
 
-Create AWS root account, create IAM user account, give necessary permissions (S3, EC2, EMR) to the user and generate API credentials. Place the credentials.csv to the project root directory.
+Create AWS root account, create IAM user account, give necessary permissions (S3, EC2, EMR) to the user and generate API credentials. Place the `credentials.csv` to the project root directory.
 
 Most of the scripts require boto and/or awscli which you need to install:
 
@@ -22,11 +22,11 @@ The scripts that use AWS CLI tools expect that the following profile exists in ~
     aws_access_key_id = YOUR_IAM_KEY
     aws_secret_access_key = YOUR_IAM_SECRET
 
-Boto expects that the credentials are exported as env variables (see file for further instructions):
+Boto expects that the credentials are exported as env variables. Place your `credentials.csv` in the project root (see script file for further instructions) and run:
 
     . tools/export_env_variables.sh
 
-Once we have boto and awscli installed and the env variables installed, we can run the scripts:
+Once you have boto and awscli installed and the env variables installed, you can run the scripts:
 
     tools/list-emr-info.py
 

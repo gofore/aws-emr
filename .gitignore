@@ -3,3 +3,4 @@ credentials.csv
 *.ppk
 .vagrant
 logs/
+temp/

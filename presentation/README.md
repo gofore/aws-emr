@@ -22,8 +22,9 @@ All presentation material is available at [https://github.com/gofore/aws-emr](ht
 
 ## [Amazon Elastic MapReduce](http://aws.amazon.com/elasticmapreduce/)
 
-- MapReduce cluster as a service
-- Hadoop-based
+- Hadoop-based MapReduce cluster as a service
+- In goes data and streaming programs, out comes more data
+- All this can be configured from web UI or through API
 
 ---
 
@@ -180,7 +181,7 @@ Data was given as monthly tar.gz archive files. We unpack the data and use AWS C
 ## The small files problem
 
 - We have approximately 4 million files.
-- "Small files are a big problem in Hadoop" [1](http://blog.cloudera.com/blog/2009/02/the-small-files-problem/)[2](http://amilaparanawithana.blogspot.fi/2012/06/small-file-problem-in-hadoop.html)[3](http://www.idryman.org/blog/2013/09/22/process-small-files-on-hadoop-using-combinefileinputformat-1/)
+- "Small files are a big problem in Hadoop" [[1]](http://blog.cloudera.com/blog/2009/02/the-small-files-problem/) [[2]](http://amilaparanawithana.blogspot.fi/2012/06/small-file-problem-in-hadoop.html) [[3]](http://www.idryman.org/blog/2013/09/22/process-small-files-on-hadoop-using-combinefileinputformat-1/)
 - Concatenate data into bigger chunks
 
 --

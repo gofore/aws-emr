@@ -1,6 +1,7 @@
 
 ## Directory contents
 
+- **AWS-tools:** Contains scripts to manage AWS resources instead of doing them manually from the web UI.
 - **Data-munging:** Contains manual tools (mainly in EC2 and uploading to S3) to pre-munge the data before EMR. If the munging is complicated, it should obviously be done with EMR.
 - **Example-data:** Contains small snippets of input test data for local development.
 - **Streaming-programs:** Contains only Python scripts that are fully compatible to be run as Hadoop Streaming programs (as mappers, reducers etc).
@@ -24,11 +25,11 @@ The scripts that use AWS CLI tools expect that the following profile exists in ~
 
 Boto expects that the credentials are exported as env variables. Place your `credentials.csv` in the project root (see script file for further instructions) and run:
 
-    . tools/export_env_variables.sh
+    . aws-tools/export_env_variables.sh
 
 Once you have boto and awscli installed and the env variables installed, you can run the scripts:
 
-    tools/list-emr-info.py
+    aws-tools/list-emr-info.py
 
 ## Local development
 

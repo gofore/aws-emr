@@ -8,16 +8,15 @@ import xml.etree.ElementTree as ET
 def main(argv):
 
     root = ET.parse(sys.stdin).getroot()
-    
     period_start = root.attrib.get('periodstart')
-    print period_start
 
     for road_link in root.iter('{http://FTT.arstraffic.com/schemas/IndividualTT/}link'):
         road_link_id = road_link.attrib.get('id')
-        for car in road_link:
-            time = car.attrib.get('tt')
-            offset = car.attrib.get('os')
-            print road_link_id, time, offset
+        road_link_times = [int(car.attrib.get('tt')) for car in road_link]
+        
+        number_of_cars = len(road_link_times)
+        average_travel_time = sum(road_link_times)/number_of_cars
+        print "{0}\t{1} {2}".format(road_link_id, average_travel_time, number_of_cars)
 
 
 if __name__ == "__main__":

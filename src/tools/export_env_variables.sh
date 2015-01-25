@@ -1,9 +1,10 @@
 #!/bin/bash
 
 # This script exports the AWS user credentials as environment variables
-# for tools such as Ansible and boto. You can simply run this script as:
+# for tools such as Ansible and boto. You can simply run this script from
+# the src directory with:
 #
-# . ./export_env_variables.sh
+# . tools/export_env_variables.sh
 #
 # This requires that the credentials.csv file exists in the project root.
 # Optionally you can also pass the path to the file as an argument.

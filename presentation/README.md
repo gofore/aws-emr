@@ -185,17 +185,6 @@ Data was given as monthly tar.gz archive files. We unpack the data and use AWS C
 - Concatenate data into bigger chunks
 
 
-
-yhdessä tiedostossa 1 päivä, yhdessä rivissä 1 minuutti, 29 minuuttia kesto, ajettiin count-cars.py 2014-06 aineisto, 30 mapperia, 7 reduceria
-
-time python count.py > sorted_by_count.txt
-
-real	4m50.397s
-user	4m46.456s
-sys	0m2.847s
-
-
-
 --
 
 <pre><code data-trim="" class="json">
@@ -244,6 +233,22 @@ sys	0m2.847s
 
 --
 
+## Some statistics
+
+ - Each day was concatenated into single file
+ - Each line was single minute of measurements
+ - 30 days from June 2014
+ - Execution time in AWS EMR 29 minutes
+ - 30 mappers and 7 reducers
+
+
+Comparison to local parsing:
+
+ - Data parsed in simple python
+ - Execution time: 4 minutes 46 seconds
+
+
+--
 
 
 ## Parsing XML with Hadoop Streaming

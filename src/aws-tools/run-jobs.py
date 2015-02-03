@@ -21,7 +21,10 @@ def create_new_steps(streaming_program, input_data_path, s3_bucket):
         mapper=streaming_program,
         reducer="aggregate",
         combiner=None,
-        cache_files=["s3://{0}/digitraffic/src/streaming-programs/{1}#{1}".format(s3_bucket, streaming_program)],
+        cache_files=[
+            "s3://{0}/digitraffic/src/streaming-programs/{1}#{1}".format(s3_bucket, streaming_program),
+            "s3://{0}/digitraffic/{1}#{1}".format(s3_bucket, "locationdata.json")
+            ],
         cache_archives=None,
         step_args=None,
         action_on_failure='CANCEL_AND_WAIT',

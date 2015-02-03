@@ -4,3 +4,4 @@ credentials.csv
 .vagrant
 logs/
 temp/
+big-*

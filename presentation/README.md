@@ -184,6 +184,10 @@ Data was given as monthly tar.gz archive files. We unpack the data and use AWS C
 - "Small files are a big problem in Hadoop" [[1]](http://blog.cloudera.com/blog/2009/02/the-small-files-problem/) [[2]](http://amilaparanawithana.blogspot.fi/2012/06/small-file-problem-in-hadoop.html) [[3]](http://www.idryman.org/blog/2013/09/22/process-small-files-on-hadoop-using-combinefileinputformat-1/)
 - Concatenate data into bigger chunks
 
+
+yhdessä tiedostossa 1 päivä, yhdessä rivissä 1 minuutti, 29 minuuttia kesto, ajettiin count-cars.py 2014-06 aineisto, 30 mapperia, 7 reduceria
+
+
 --
 
 <pre><code data-trim="" class="json">

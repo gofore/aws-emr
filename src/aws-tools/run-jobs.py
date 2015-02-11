@@ -36,32 +36,33 @@ def create_new_cluster(conn, s3_bucket, cluster_name, keep_alive=True, worker_ty
 
     # Note: for testing purposes, you can run ami_version 2.4.9 on m1.small instances.
     # For newer Hadoop, use 3.3.1 and m1.medium or m3.xlarge
+    # on-demand prices for m1.small and m1.medium are 0.047 and 0.095 respectively
     master_node = "m1.medium"
     ami_version = "3.3.1"
-    bid_price = "0.009"
+    bid_price = "0.012"
     if worker_type == "m1.small":
         master_node = "m1.small"
         ami_version = "2.4.9"
-        bid_price = "0.009"
+        bid_price = "0.012"
 
     instance_groups = []
     instance_groups.append(InstanceGroup(
         name="Main node",
         role="MASTER",
         num_instances=1,
-        type="m1.small",
+        type=master_node,
         market="ON_DEMAND"))
     instance_groups.append(InstanceGroup(
         name="Worker nodes",
         role="CORE",
         num_instances=worker_count,
-        type="m1.small",
+        type=worker_type,
         market="ON_DEMAND"))
     instance_groups.append(InstanceGroup(
         name="Optional spot-price nodes",
         role="TASK",
         num_instances=worker_count,
-        type="m1.small",
+        type=worker_type,
         market="SPOT",
         bidprice=bid_price))
 

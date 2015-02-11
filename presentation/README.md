@@ -149,10 +149,10 @@ Each file contains finished passthroughs for each road segment during one minute
 
 ## Some numbers
 
-- Data from 2007 to June 2014 = 7.5 years
-- 525600 XML files per year = 3.9 million files
-- 8.6 GB uncompressed xml per year = 65 GB
-- 1.12 GB compressed archives per year = 8.4 GB
+- **6.5** years worth of data from January 2008 to June 2014
+- **3.9 million** XML files (525600 files per year)
+- **6.3** GB of compressed archives (with 7.5GB of additional CSV median data)
+- **42** GB of XML (and 13 GB of CSV)
 
 ---
 

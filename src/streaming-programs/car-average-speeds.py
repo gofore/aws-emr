@@ -17,7 +17,8 @@ def main(locationdata_dictionary_file):
             try:
                 link_data = (item for item in locationdata['links'] if item['id'] == recognition['id']).next()
                 average_speed  = (link_data['dist'] / recognition['tt']) * 3.6
-                print "CountAverage: " + str(recognition['id']) + "\t" + str(int(average_speed))
+                print "LongValueSum:" + str(recognition['id']) + "_speedsum\t" + str(int(average_speed))
+                print "LongValueSum:" + str(recognition['id']) + "_speedcount\t1"
             except:
                 pass
 

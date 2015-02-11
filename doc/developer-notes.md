@@ -11,18 +11,21 @@ To copy objects from within S3:
       --profile hadoop-seminar-emr
 
 
-# Calculate avg speeds
+# Case 1: Calculate average speeds from 2014-06
 
+# Start a cluster
 aws-tools/run-jobs.py create-cluster "Car speed counting cluster"
 Starting cluster j-TVW9D7C54E10 Car speed counting cluster
 
+# Add a job
 aws-tools/run-jobs.py run-step j-TVW9D7C54E10 car-average-speeds.py digitraffic/munged/links-by-date/2014
 Step will output data to s3://hadoop-seminar-emr/digitraffic/outputs/2015-02-11_18-15-43_car-average-speeds.py/
 
+# Download and concatenate results
 aws s3 cp s3://hadoop-seminar-emr/digitraffic/outputs/2015-02-11_18-15-43_car-average-speeds.py/ /tmp/emr --recursive --profile hadoop-seminar-emr
-
 cat /tmp/emr/part-* > /tmp/emr/output
 
+# Visualize results
 python streaming-programs/car-average-speeds_output.py /tmp/emr/output example-data/locationdata.json
 
 125 	Kehä III -> Tattarisuo

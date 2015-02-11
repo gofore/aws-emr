@@ -34,7 +34,7 @@ def main(output_file, locationdata_file):
 
     sorted_results = OrderedDict(sorted(results.items(), key=lambda x :x[1]['speed'], reverse=True))
     for link_id, link in sorted_results.iteritems():
-        print link['speed'], "\t", link['name']
+        print str(link['speed']) + "\t" + link['name']
 
 if __name__ == "__main__":
     main(sys.argv[1], sys.argv[2])

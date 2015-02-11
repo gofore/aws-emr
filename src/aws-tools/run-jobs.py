@@ -101,12 +101,6 @@ if __name__ == "__main__":
         sys.exit()
 
     connection = boto.emr.connect_to_region('eu-west-1')
-    step_params = {
-        "streaming_program": sys.argv[3],
-        "input_data_path": sys.argv[4],
-        "s3_bucket": "hadoop-seminar-emr"
-    }
-    steps = create_new_steps(**step_params)
 
     if sys.argv[1] == "create-cluster":
         cluster_params = {
@@ -119,6 +113,13 @@ if __name__ == "__main__":
         create_new_cluster(connection, **cluster_params)
 
     elif sys.argv[1] == "run-step":
+        step_params = {
+            "streaming_program": sys.argv[3],
+            "input_data_path": sys.argv[4],
+            "s3_bucket": "hadoop-seminar-emr"
+        }
+        steps = create_new_steps(**step_params)
+
         cluster_id = sys.argv[2]
         run_steps_on_existing_cluster(connection, steps, cluster_id)
     else:

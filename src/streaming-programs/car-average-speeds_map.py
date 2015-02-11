@@ -4,11 +4,13 @@ import json
 
 # Count average speeds for links
 
-def main(locationdata_dictionary_file):
+def get_locationdata(locationdata_file):
+    with open(locationdata_file, "r") as jsonfile:
+        return json.load(jsonfile)
 
-    locationdata = {}
-    with open(locationdata_dictionary_file, "r") as dictionary_file:
-        locationdata = json.load(dictionary_file)
+def main(locationdata_file):
+
+    locationdata = get_locationdata(locationdata_file)
 
     for input_line in sys.stdin:
         data = json.loads(input_line)

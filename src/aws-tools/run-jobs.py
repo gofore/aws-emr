@@ -62,7 +62,7 @@ def create_new_cluster(conn, s3_bucket, cluster_name, keep_alive=True, worker_ty
         name="Optional spot-price nodes",
         role="TASK",
         num_instances=worker_count,
-        type=worker_type,
+        type="m1.medium",
         market="SPOT",
         bidprice=bid_price))
 

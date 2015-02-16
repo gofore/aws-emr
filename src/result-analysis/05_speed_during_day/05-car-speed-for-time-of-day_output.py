@@ -12,7 +12,8 @@ app = Flask(__name__)
 output_file = sys.argv[1]
 locationdata_file = sys.argv[2]
 
-number_of_items_to_return = 20
+drawable_series = []
+number_of_items_to_return = 10
 ignore_list = [112, 184]
 
 # Sorts and prints a human-readable list of average speeds on links for each hour of day
@@ -40,14 +41,13 @@ def get_drawable_series():
                 if int(link_id) not in ignore_list:
                     results[link_id][hour_of_day][data_type] = data_value
     
-    drawable_series = []
     for link_id, link_hour_stats in results.iteritems():
         name = (item for item in locationdata['links'] if item['id'] == link_id).next()['name']
         link_series = {'name': u"{0} ({1})".format(name, str(link_id)), 'data':[], 'link_id': link_id}
 
         for hour, link_hour in link_hour_stats.iteritems():
             speed = link_hour['sum'] / link_hour['count']
-            link_series['data'].append({'x': int(hour), 'y': speed})
+            link_series['data'].append({'x': int(hour)*3600, 'y': speed})
 
         drawable_series.append(link_series)
 
@@ -57,8 +57,8 @@ def get_drawable_series():
     #print json.dumps(drawable_series, indent=2)
     #print len(drawable_series['series'])
 
-    return random.sample(drawable_series, 20)
-
+def get_random_subset(size):
+    return random.sample(drawable_series, size)
 
 @app.route("/")
 def root():
@@ -66,7 +66,8 @@ def root():
 
 @app.route("/data")
 def data():
-    return jsonify(series=get_drawable_series())
+    return jsonify(series=get_random_subset(number_of_items_to_return))
 
 if __name__ == "__main__":
+    get_drawable_series()
     app.run(host='0.0.0.0', port=9000, debug=True)

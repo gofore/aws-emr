@@ -35,3 +35,21 @@ python streaming-programs/car-average-speeds_output.py /tmp/emr/output example-d
 121 	Korso -> Kehä III
 121 	Linnatuuli -> Herajoki
 120 	Hangelby -> Kulloo
+
+
+# Case 2: Analyze average speeds from 2014-06 per time of day
+
+# Start a cluster
+./run-jobs.py create-cluster "Count cars for time of day"
+Starting cluster j-2B7Y5H23AFWHX Count cars for time of day
+
+# Add a job
+./run-jobs.py run-step j-2B7Y5H23AFWHX 05-car-speed-for-time-of-day_map.py digitraffic/munged/links-by-date/2014
+Step will output data to s3://hadoop-seminar-emr/digitraffic/outputs/2015-02-16_20-46-33_05-car-speed-for-time-of-day_map.py/
+
+# Download and concatenate results
+aws s3 cp s3://hadoop-seminar-emr/digitraffic/outputs/2015-02-16_20-46-33_05-car-speed-for-time-of-day_map.py/ /tmp/emr --recursive --profile hadoop-seminar-emr
+cat /tmp/emr/part-* > /tmp/emr/output
+
+# Visualize results
+python streaming-programs/05-car-speed-for-time-of-day_output.py /tmp/emr/output example-data/locationdata.json

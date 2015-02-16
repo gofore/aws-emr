@@ -35,6 +35,7 @@ Once you have boto and awscli installed and the env variables installed, you can
 
 Develop Hadoop streaming programs locally by passing the example input data to it in stdin:
 
-    cat example-data/source-data-example.xml | python streaming-programs/wordsplit-map.py
+    cat example-data/source-data-example.xml | python streaming-programs/01-wordsplit-map.py
+    cat example-data/2014-06-01-subset.json | python streaming-programs/04-car-average-speeds_map.py example-data/locationdata.json
 
 Once the output looks good, upload the streaming program to S3 with the upload script, and run it in EMR.

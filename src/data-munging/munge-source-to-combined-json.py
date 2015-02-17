@@ -14,7 +14,7 @@ Takes 1-minute xml files, calculates average travel times, and concatenates the 
 a file where each line is a valid json object. New format also takes 62% of original space.
 
 Run example:
-./munge-source-to-1day-json.py /tmp/source-data/2014/06/ hadoop-seminar-emr digitraffic/munged/output_directory/
+src/data-munging/munge-source-to-combined-json.py ../imported-archives/2014/05/ hadoop-seminar-emr digitraffic/munged/links-by-date/2014/
 '''
 
 def _parse_xml_files(filenames):
@@ -24,6 +24,8 @@ def _parse_xml_files(filenames):
     concatenated_data = []
 
     for filename in filenames:
+        print "Parsing file", filename
+
         xml_root = ET.parse(filename).getroot()
         parsed_data = {}
         parsed_data['date'] = xml_root.attrib.get('periodstart')
@@ -54,7 +56,7 @@ def get_file_lists(root_input_path, batch_size):
     ''' Walks through the given yearly directory and returns a list of files '''
 
     batches_data = []
-    pattern = re.compile("measurements-(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d)\+(\d\d)\+(\d\d)Z.xml")
+    pattern = re.compile("measurements-(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d).(\d\d).(\d\d)Z.xml")
 
     batch_files = []
     last_match = ()
@@ -63,10 +65,10 @@ def get_file_lists(root_input_path, batch_size):
         for walked_file in walked_files:
             source_file_match = pattern.findall(walked_file)
             if source_file_match:
-                print "matched", source_file_match
                 last_match = source_file_match
                 batch_files.append(directory + "/" + walked_file)
 
+    print "Number of input files", len(batch_files)
     output_s3_key = ""
     if batch_size == "month":
         output_s3_key = last_match[0][0] + "-" + last_match[0][1] + ".json"
@@ -75,8 +77,10 @@ def get_file_lists(root_input_path, batch_size):
     return batches_data
 
 def combine_and_upload(batches, output_s3_path, s3_bucket):
-    print json.dumps(batches, sort_keys=True, indent=4)
+    #print json.dumps(batches, sort_keys=True, indent=4)
+    print "Number of batches", len(batches)
     for batch in batches:
+        print "Parsing and uploading batch", batch
         _upload_data_to_s3(_parse_xml_files(batch['files']), batch['output_s3_key'], s3_bucket)
 
 

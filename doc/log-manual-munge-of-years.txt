@@ -1,0 +1,86 @@
+
+# 2014
+
+src/data-munging/munge-source-to-combined-json.py /home/ubuntu/imported-archives/2014/06 hadoop-seminar-emr digitraffic/munged/links-by-date/2014/
+Number of input files 43020
+Number of batches 1
+552.72	munged 43020 files
+17.66	uploaded data to s3://hadoop-seminar-emr/2014-06.json
+570.66	total run time
+
+src/data-munging/munge-source-to-combined-json.py /home/ubuntu/imported-archives/2014/05 hadoop-seminar-emr digitraffic/munged/links-by-date/2014/
+Number of input files 44640
+Number of batches 1
+567.58	munged 44640 files
+16.73	uploaded data to s3://hadoop-seminar-emr/2014-05.json
+584.60	total run time
+
+src/data-munging/munge-source-to-combined-json.py /home/ubuntu/imported-archives/2014/04 hadoop-seminar-emr digitraffic/munged/links-by-date/2014/
+Number of input files 43200
+Number of batches 1
+446.65	munged 43200 files
+15.59	uploaded data to s3://hadoop-seminar-emr/2014-04.json
+462.52	total run time
+
+src/data-munging/munge-source-to-combined-json.py /home/ubuntu/imported-archives/2014/03 hadoop-seminar-emr digitraffic/munged/links-by-date/2014/
+Number of input files 44640
+Number of batches 1
+289.57	munged 44640 files
+10.53	uploaded data to s3://hadoop-seminar-emr/digitraffic/munged/links-by-date/2014/2014-03.json
+300.38	total run time
+
+src/data-munging/munge-source-to-combined-json.py /home/ubuntu/imported-archives/2014/02 hadoop-seminar-emr digitraffic/munged/links-by-date/2014/
+Number of input files 40320
+Number of batches 1
+132.36	munged 40320 files
+5.50	uploaded data to s3://hadoop-seminar-emr/digitraffic/munged/links-by-date/2014/2014-02.json
+138.19	total run time
+
+src/data-munging/munge-source-to-combined-json.py /home/ubuntu/imported-archives/2014/01 hadoop-seminar-emr digitraffic/munged/links-by-month/2014
+Number of input files 44640
+Number of batches 1
+174.94	munged 44640 files
+7.03	uploaded data to s3://hadoop-seminar-emr/digitraffic/munged/links-by-month/20142014-01.json
+182.39	total run time
+
+# 2013
+
+src/data-munging/munge-source-to-combined-json.py /home/ubuntu/imported-archives/2013/12 hadoop-seminar-emr digitraffic/munged/links-by-month/2013/
+Number of input files 44640
+Number of batches 1
+170.85	munged 44640 files
+6.55	uploaded data to s3://hadoop-seminar-emr/digitraffic/munged/links-by-month/2013/2013-12.json
+178.86	total run time
+
+src/data-munging/munge-source-to-combined-json.py /home/ubuntu/imported-archives/2013/11 hadoop-seminar-emr digitraffic/munged/links-by-month/2013/
+Number of input files 43200
+Number of batches 1
+223.64	munged 43200 files
+8.61	uploaded data to s3://hadoop-seminar-emr/digitraffic/munged/links-by-month/2013/2013-11.json
+233.48	total run time
+
+src/data-munging/munge-source-to-combined-json.py /home/ubuntu/imported-archives/2013/10 hadoop-seminar-emr digitraffic/munged/links-by-month/2013/
+Number of input files 44640
+Number of batches 1
+424.61	munged 44640 files
+15.16	uploaded data to s3://hadoop-seminar-emr/digitraffic/munged/links-by-month/2013/2013-10.json
+441.04	total run time
+
+src/data-munging/munge-source-to-combined-json.py /home/ubuntu/imported-archives/2013/09 hadoop-seminar-emr digitraffic/munged/links-by-month/2013/
+Number of input files 43200
+Number of batches 1
+492.95	munged 43200 files
+17.08	uploaded data to s3://hadoop-seminar-emr/digitraffic/munged/links-by-month/2013/2013-09.json
+511.30	total run time
+
+src/data-munging/munge-source-to-combined-json.py /home/ubuntu/imported-archives/2013/08 hadoop-seminar-emr digitraffic/munged/links-by-month/2013/
+Number of input files 44640
+Number of batches 1
+530.35	munged 44640 files
+20.42	uploaded data to s3://hadoop-seminar-emr/digitraffic/munged/links-by-month/2013/2013-08.json
+552.28	total run time
+
+src/data-munging/munge-source-to-combined-json.py /home/ubuntu/imported-archives/2013/07 hadoop-seminar-emr digitraffic/munged/links-by-month/2013/
+Number of input files 44640
+Number of batches 1
+

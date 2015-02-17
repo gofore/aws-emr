@@ -201,6 +201,7 @@ Data was given as monthly tar.gz archive files. We unpack the data and use AWS C
 - "Small files are a big problem in Hadoop" [[1]](http://blog.cloudera.com/blog/2009/02/the-small-files-problem/) [[2]](http://amilaparanawithana.blogspot.fi/2012/06/small-file-problem-in-hadoop.html) [[3]](http://www.idryman.org/blog/2013/09/22/process-small-files-on-hadoop-using-combinefileinputformat-1/)
 - Concatenate data into bigger chunks
 
+Munging xml worth of 6,5 years takes 8,5 hours on a single t2.medium instance
 
 --
 

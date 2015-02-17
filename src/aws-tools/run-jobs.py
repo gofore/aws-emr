@@ -40,10 +40,12 @@ def create_new_cluster(conn, s3_bucket, cluster_name, keep_alive=True, worker_ty
     master_node = "m1.medium"
     ami_version = "3.3.1"
     bid_price = "0.012"
+    spot_count = 6
     if worker_type == "m1.small":
         master_node = "m1.small"
         ami_version = "2.4.9"
         bid_price = "0.012"
+        spot_count = 2
 
     instance_groups = []
     instance_groups.append(InstanceGroup(
@@ -61,7 +63,7 @@ def create_new_cluster(conn, s3_bucket, cluster_name, keep_alive=True, worker_ty
     instance_groups.append(InstanceGroup(
         name="Optional spot-price nodes",
         role="TASK",
-        num_instances=worker_count,
+        num_instances=spot_count,
         type="m1.medium",
         market="SPOT",
         bidprice=bid_price))

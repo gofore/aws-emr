@@ -24,8 +24,6 @@ def _parse_xml_files(filenames):
     concatenated_data = []
 
     for filename in filenames:
-        print "Parsing file", filename
-
         xml_root = ET.parse(filename).getroot()
         parsed_data = {}
         parsed_data['date'] = xml_root.attrib.get('periodstart')
@@ -44,13 +42,14 @@ def _parse_xml_files(filenames):
     print "{0:.2f}\tmunged {1} files".format(time.time() - time_concat_start, len(filenames))
     return concatenated_data
 
-def _upload_data_to_s3(data, s3_output_object_key, s3_bucket):
+def _upload_data_to_s3(data, s3_output_object_key, s3_bucket, output_s3_path):
     ''' Uploads the given list of json objects as a single object to S3 '''
 
     time_upload_start = time.time()
-    output_key = boto.s3.key.Key(s3_bucket, s3_output_object_key)
+    full_s3_key = output_s3_path + s3_output_object_key
+    output_key = boto.s3.key.Key(s3_bucket, full_s3_key)
     output_key.set_contents_from_string('\n'.join(data))
-    print "{0:.2f}\tuploaded data to s3://{1}/{2}".format(time.time() - time_upload_start, s3_bucket.name, s3_output_object_key)
+    print "{0:.2f}\tuploaded data to s3://{1}/{2}".format(time.time() - time_upload_start, s3_bucket.name, full_s3_key)
 
 def get_file_lists(root_input_path, batch_size):
     ''' Walks through the given yearly directory and returns a list of files '''
@@ -80,8 +79,7 @@ def combine_and_upload(batches, output_s3_path, s3_bucket):
     #print json.dumps(batches, sort_keys=True, indent=4)
     print "Number of batches", len(batches)
     for batch in batches:
-        print "Parsing and uploading batch", batch
-        _upload_data_to_s3(_parse_xml_files(batch['files']), batch['output_s3_key'], s3_bucket)
+        _upload_data_to_s3(_parse_xml_files(batch['files']), batch['output_s3_key'], s3_bucket, output_s3_path)
 
 
 if __name__ == "__main__":

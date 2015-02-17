@@ -7,10 +7,10 @@ Ville Seppänen [@Vilsepi](https://twitter.com/Vilsepi) | Jari Voutilainen [@Zha
 
 ## Agenda
 
-1. Introduction to Elastic MapReduce
-2. Simple EMR demo
+1. Introduction to Hadoop Streaming and Elastic MapReduce
+2. Simple EMR web interface demo
 3. Introduction to our dataset
-4. Examples and findings
+4. Using EMR from command line with boto
 
 All presentation material is available at [https://github.com/gofore/aws-emr](https://github.com/gofore/aws-emr)
 
@@ -18,7 +18,7 @@ All presentation material is available at [https://github.com/gofore/aws-emr](ht
 
 ## Hadoop Streaming
 
-"Utility that allows you to create and run Map/Reduce jobs with any executable or script as the mapper and/or the reducer."
+Utility that allows you to create and run Map/Reduce jobs with any executable or script as the mapper and/or the reducer.
 
 <pre><code data-trim="" class="shell">
 $HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/hadoop-streaming.jar \
@@ -71,19 +71,16 @@ $HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/hadoop-streaming.jar \
 
 ## [WordSplitter.py](https://s3.amazonaws.com/elasticmapreduce/samples/wordcount/wordSplitter.py)
 
-<pre><code data-trim="" class="java">
+<pre><code data-trim="" class="python">
 #!/usr/bin/python
 import sys
 import re
 
-def main(argv):
-    pattern = re.compile("[a-zA-Z][a-zA-Z0-9]*")
-    for line in sys.stdin:
-        for word in pattern.findall(line):
-            print "LongValueSum:" + word.lower() + "\t" + "1"
+pattern = re.compile("[a-zA-Z][a-zA-Z0-9]*")
+for line in sys.stdin:
+    for word in pattern.findall(line):
+        print "LongValueSum:" + word.lower() + "\t" + "1"
 
-if __name__ == "__main__":
-    main(sys.argv)
 </code></pre>
 
 --

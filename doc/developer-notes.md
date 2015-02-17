@@ -52,4 +52,4 @@ aws s3 cp s3://hadoop-seminar-emr/digitraffic/outputs/2015-02-16_20-46-33_05-car
 cat /tmp/emr/part-* > /tmp/emr/output
 
 # Visualize results
-python streaming-programs/05-car-speed-for-time-of-day_output.py /tmp/emr/output example-data/locationdata.json
+result-analysis/05-car-speed-for-time-of-day_output.py /tmp/emr/output example-data/locationdata.json

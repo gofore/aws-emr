@@ -73,7 +73,7 @@ def create_new_cluster(conn, s3_bucket, cluster_name, keep_alive=True, worker_ty
         keep_alive=keep_alive,
         enable_debugging=True,
         log_uri="s3://{0}/logs/".format(s3_bucket),
-        ami_version="2.4.9",
+        ami_version=ami_version,
         bootstrap_actions=[],
         additional_info=None,
         ec2_keyname="hadoop-seminar-emr",
@@ -108,7 +108,7 @@ if __name__ == "__main__":
     if sys.argv[1] == "create-cluster":
         cluster_params = {
             "cluster_name": sys.argv[2],
-            "worker_type": "m1.small",
+            "worker_type": "m1.medium",
             "worker_count": 2,
             "keep_alive": True,
             "s3_bucket": "hadoop-seminar-emr"

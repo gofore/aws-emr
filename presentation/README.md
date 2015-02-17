@@ -58,14 +58,14 @@ $HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/hadoop-streaming.jar \
 
 --
 
-- Cluster Configuration: name, logging
+- Cluster: name, logging
 - Tags: keywords for the cluster
-- Software Configuration: Hadoop version, Hive, Pig, HBase, Ganglia...
-- File System Configuration: EMRFS file encryption, consistency
-- Hardware Configuration: master, code and task nodes
+- **Software:** Hadoop distribution and version, pre-installed applications (Hive, Pig,...)
+- File System: encryption, consistency
+- **Hardware:** number and type of instances
 - Security and Access: ssh keys, node access roles
-- Bootstrap Actions: scripts to initialize the cluster
-- Steps: a queue of jobs of the cluster
+- Bootstrap Actions: scripts to customize the cluster
+- **Steps:** a queue of mapreduce jobs for the cluster
 
 --
 

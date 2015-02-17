@@ -66,7 +66,7 @@ def create_new_cluster(conn, s3_bucket, cluster_name, keep_alive=True, worker_ty
         market="SPOT",
         bidprice=bid_price))
 
-    jobflow_id = conn.run_jobflow(
+    cluster_id = conn.run_jobflow(
         cluster_name,
         instance_groups=instance_groups,
         action_on_failure='CANCEL_AND_WAIT',
@@ -81,7 +81,9 @@ def create_new_cluster(conn, s3_bucket, cluster_name, keep_alive=True, worker_ty
         job_flow_role="EMR_EC2_DefaultRole",
         service_role="EMR_DefaultRole")
 
-    print "Starting cluster", jobflow_id, cluster_name
+    conn.add_tags(cluster_id, {'Name': "EMR Cluster " + cluster_id})
+
+    print "Starting cluster", cluster_id, cluster_name
     if keep_alive:
         print "Note: cluster will be left running, remember to terminate it manually after you are done!"
 

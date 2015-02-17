@@ -16,6 +16,20 @@ All presentation material is available at [https://github.com/gofore/aws-emr](ht
 
 ---
 
+## Hadoop Streaming
+
+"Utility that allows you to create and run Map/Reduce jobs with any executable or script as the mapper and/or the reducer."
+
+<pre><code data-trim="" class="shell">
+$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/hadoop-streaming.jar \
+    -input myInputDirs \
+    -output myOutputDir \
+    -mapper /bin/cat \
+    -reducer /bin/wc
+</code></pre>
+
+---
+
 # Elastic MapReduce (EMR)
 
 --
@@ -25,6 +39,12 @@ All presentation material is available at [https://github.com/gofore/aws-emr](ht
 - Hadoop-based MapReduce cluster as a service
 - In goes data and streaming programs, out comes more data
 - All this can be configured from web UI or through API
+
+--
+
+## Hadoop streaming in EMR
+
+![EMR and S3](/images/streaming-in-emr.png)
 
 ---
 

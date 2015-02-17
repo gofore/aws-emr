@@ -25,6 +25,8 @@ def get_locationdata():
 def get_drawable_series():
 
     locationdata = get_locationdata()
+    lowest_link_id  = 0
+    highest_link_id = 99999999
 
     results = defaultdict(lambda : defaultdict(dict))
     with open(output_file, "r") as resultlines:
@@ -39,7 +41,8 @@ def get_drawable_series():
                 data_value = int(match[0][3])
 
                 if int(link_id) not in ignore_list:
-                    results[link_id][hour_of_day][data_type] = data_value
+                    if int(link_id) >= lowest_link_id and int(link_id) <= highest_link_id:
+                        results[link_id][hour_of_day][data_type] = data_value
     
     for link_id, link_hour_stats in results.iteritems():
         name = (item for item in locationdata['links'] if item['id'] == link_id).next()['name']

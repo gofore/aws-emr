@@ -94,6 +94,7 @@ for line in sys.stdin:
     - EMR FS is an implementation of HDFS, with reading and writing of files directly to S3.   
 - S3 and S3n
 - S3 is not a file system
+    - S3 has eventual consistency: files written to S3 might not be immediately available for reading. 
 
 http://wiki.apache.org/hadoop/AmazonS3
 

@@ -290,6 +290,7 @@ Static link information (120kb json)
 import boto.emr
 from boto.emr.instance_group import InstanceGroup
 
+# Requires that AWS API credentials have been exported as env variables
 connection = boto.emr.connect_to_region('eu-west-1')
 </code></pre>
 
@@ -318,7 +319,7 @@ instance_groups.append(InstanceGroup(
 ### Start EMR cluster
 
 <pre><code data-trim="" class="python">
-cluster_id = conn.run_jobflow(
+cluster_id = connection.run_jobflow(
     "Our awesome cluster",
     instance_groups=instance_groups,
     action_on_failure='CANCEL_AND_WAIT',
@@ -342,19 +343,31 @@ steps = []
 steps.append(boto.emr.step.StreamingStep(
     "Our awesome streaming app",
     input="s3://our-s3-bucket/our-input-data",
-    output=output_path,
-    mapper=streaming_program,
+    output="s3://our-s3-bucket/our-output-path/",
+    mapper="our-mapper.py",
     reducer="aggregate",
-    combiner=None,
     cache_files=[
-        "s3://{0}/digitraffic/src/streaming-programs/{1}#{1}".format(s3_bucket, streaming_program),
-        "s3://{0}/digitraffic/{1}#{1}".format(s3_bucket, "locationdata.json")
+        "s3://our-s3-bucket/programs/our-mapper.py#our-mapper.py",
+        "s3://our-s3-bucket/data/our-dictionary.json#our-dictionary.json",)
         ],
-    cache_archives=None,
-    step_args=None,
     action_on_failure='CANCEL_AND_WAIT',
     jar='/home/hadoop/contrib/streaming/hadoop-streaming.jar'))
-conn.add_jobflow_steps(cluster_id, steps)
+connection.add_jobflow_steps(cluster_id, steps)
+</code></pre>
+
+--
+
+### Recap
+
+<pre><code data-trim="" class="python">
+#!/usr/bin/env python
+
+import boto.emr
+from boto.emr.instance_group import InstanceGroup
+
+connection = boto.emr.connect_to_region('eu-west-1')
+cluster_id = connection.run_jobflow(**cluster_parameters)
+connection.add_jobflow_steps(cluster_id, **steps_parameters)
 </code></pre>
 
 --

@@ -62,6 +62,8 @@ cat input_data.txt | mapper.py | reducer.py > output_data.txt
 
 --
 
+## Cluster creation steps
+
 - Cluster: name, logging
 - Tags: keywords for the cluster
 - **Software:** Hadoop distribution and version, pre-installed applications (Hive, Pig,...)
@@ -73,7 +75,7 @@ cat input_data.txt | mapper.py | reducer.py > output_data.txt
 
 --
 
-## [WordSplitter.py](https://s3.amazonaws.com/elasticmapreduce/samples/wordcount/wordSplitter.py)
+## [WordSplitter.py](https://s3.amazonaws.com/elasticmapreduce/samples/wordcount/wordSplitter.py) (mapper)
 
 <pre><code data-trim="" class="python">
 #!/usr/bin/python
@@ -84,6 +86,14 @@ pattern = re.compile("[a-zA-Z][a-zA-Z0-9]*")
 for line in sys.stdin:
     for word in pattern.findall(line):
         print "LongValueSum:" + word.lower() + "\t" + "1"
+</code></pre>
+
+<pre><code data-trim="" class="text">
+LongValueSum:i         1
+LongValueSum:count     1
+LongValueSum:words     1
+LongValueSum:with      1
+LongValueSum:hadoop    1
 </code></pre>
 
 --
@@ -261,13 +271,91 @@ Static link information (120kb json)
 
 ---
 
-# Running EMR via boto
+# Programming EMR
 
 --
 
-## Write a bunch of tools...
+## Alternatives for the web interface
 
-- boto
+- AWS [Command line tools](http://aws.amazon.com/cli/)
+- SDKs like [boto](http://docs.pythonboto.org/en/latest/) for Python
+
+--
+
+### Connect to EMR
+
+<pre><code data-trim="" class="python">
+#!/usr/bin/env python
+
+import boto.emr
+from boto.emr.instance_group import InstanceGroup
+
+connection = boto.emr.connect_to_region('eu-west-1')
+</code></pre>
+
+--
+
+### Specify EC2 instances
+
+<pre><code data-trim="" class="python">
+instance_groups = []
+instance_groups.append(InstanceGroup(
+    role="MASTER", name="Main node",
+    type="m1.medium", num_instances=1,
+    market="ON_DEMAND"))
+instance_groups.append(InstanceGroup(
+    role="CORE", name="Worker nodes",
+    type="m1.medium", num_instances=3,
+    market="ON_DEMAND"))
+instance_groups.append(InstanceGroup(
+    role="TASK", name="Optional spot-price nodes",
+    type="m1.medium", num_instances=20,
+    market="SPOT", bidprice=0.012))
+</code></pre>
+
+--
+
+### Start EMR cluster
+
+<pre><code data-trim="" class="python">
+cluster_id = conn.run_jobflow(
+    "Our awesome cluster",
+    instance_groups=instance_groups,
+    action_on_failure='CANCEL_AND_WAIT',
+    keep_alive=True,
+    enable_debugging=True,
+    log_uri="s3://our-s3-bucket/logs/",
+    ami_version="3.3.1",
+    bootstrap_actions=[],
+    ec2_keyname="name-of-our-ssh-key",
+    visible_to_all_users=True,
+    job_flow_role="EMR_EC2_DefaultRole",
+    service_role="EMR_DefaultRole")
+</code></pre>
+
+--
+
+### Add job step to cluster
+
+<pre><code data-trim="" class="python">
+steps = []
+steps.append(boto.emr.step.StreamingStep(
+    "Our awesome streaming app",
+    input="s3://our-s3-bucket/our-input-data",
+    output=output_path,
+    mapper=streaming_program,
+    reducer="aggregate",
+    combiner=None,
+    cache_files=[
+        "s3://{0}/digitraffic/src/streaming-programs/{1}#{1}".format(s3_bucket, streaming_program),
+        "s3://{0}/digitraffic/{1}#{1}".format(s3_bucket, "locationdata.json")
+        ],
+    cache_archives=None,
+    step_args=None,
+    action_on_failure='CANCEL_AND_WAIT',
+    jar='/home/hadoop/contrib/streaming/hadoop-streaming.jar'))
+conn.add_jobflow_steps(cluster_id, steps)
+</code></pre>
 
 --
 
@@ -310,6 +398,7 @@ aws s3 cp
 
 cat /tmp/emr/part-* > /tmp/emr/output
 </code></pre>
+
 <pre><code data-trim="" class="bash">
 # Analyze results
 result-analysis/05_speed_during_day/05-car-speed-for-time-of-day_output.py
@@ -353,6 +442,7 @@ result-analysis/05_speed_during_day/05-car-speed-for-time-of-day_output.py
 
 ## Further reading
 
-- [AWS EMR Best practices](https://media.amazonwebservices.com/AWS_Amazon_EMR_Best_Practices.pdf)
+- [Amazon EMR Developer Guide](http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-what-is-emr.html)
+- [Amazon EMR Best practices](https://media.amazonwebservices.com/AWS_Amazon_EMR_Best_Practices.pdf)
 - Ubuntu MaaS blog: [Scaling a 2000-node Hadoop cluster on EC2](https://maas.ubuntu.com/2012/06/04/scaling-a-2000-node-hadoop-cluster-on-ec2ubuntu-with-juju/)
 - Big Data Borat: *["Quiz: Is it a Pokemon or a bigdata technology?"](http://www.slate.com/blogs/future_tense/2014/05/02/big_data_borat_tests_people_on_pok_mon_versus_big_data_technology_names.html)*

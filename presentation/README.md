@@ -18,14 +18,18 @@ All presentation material is available at [https://github.com/gofore/aws-emr](ht
 
 ## Hadoop Streaming
 
-Utility that allows you to create and run Map/Reduce jobs with any executable or script as the mapper and/or the reducer.
+- Utility that allows you to create and run Map/Reduce jobs with any executable or script as the mapper and/or the reducer.
 
 <pre><code data-trim="" class="shell">
 $HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/hadoop-streaming.jar \
-    -input myInputDirs \
-    -output myOutputDir \
-    -mapper /bin/cat \
-    -reducer /bin/wc
+    -input   my/Input/Directories \
+    -output  my/Output/Directory  \
+    -mapper  myMapperProgram.py   \
+    -reducer myReducerProgram.py
+</code></pre>
+
+<pre><code data-trim="" class="shell">
+cat input_data.txt | mapper.py | reducer.py > output_data.txt
 </code></pre>
 
 ---
@@ -80,14 +84,13 @@ pattern = re.compile("[a-zA-Z][a-zA-Z0-9]*")
 for line in sys.stdin:
     for word in pattern.findall(line):
         print "LongValueSum:" + word.lower() + "\t" + "1"
-
 </code></pre>
 
 --
 
 ## Filesystems
 
-- EMRFS and Hadoop
+- EMR FS vs. Hadoop FS
 - S3 and S3n
 - S3 is not a file system
 
@@ -99,9 +102,8 @@ http://wiki.apache.org/hadoop/AmazonS3
 
 --
 
-[Digitraffic](http://www.infotripla.fi/digitraffic/doku.php?id=start_en) is a service offering real time information and data about the traffic, weather and condition information on the Finnish main roads.
-
-The service is provided by the [Finnish Transport Agency](http://www.liikennevirasto.fi), and produced by [Gofore](http://gofore.com) and [Infotripla](http://infotripla.fi).
+- [Digitraffic](http://www.infotripla.fi/digitraffic/doku.php?id=start_en) is a service offering real time information and data about the traffic, weather and condition information on the Finnish main roads.
+- The service is provided by the [Finnish Transport Agency](http://www.liikennevirasto.fi) (*Liikennevirasto*), and produced by [Gofore](http://gofore.com) and [Infotripla](http://infotripla.fi).
 
 --
 
@@ -143,11 +145,11 @@ The service is provided by the [Finnish Transport Agency](http://www.liikennevir
 <ivjtdata duration="60" periodstart="2014-06-24T02:55:00Z">
   <recognitions>
     <link id="110302" data_source="1">
-      <recognition offset_seconds="8" travel_time="152"></recognition>
+      <recognition offset_seconds="8"  travel_time="152"></recognition>
       <recognition offset_seconds="36" travel_time="155"></recognition>
     </link>
     <link id="410102" data_source="1">
-      <recognition offset_seconds="6" travel_time="126"></recognition>
+      <recognition offset_seconds="6"  travel_time="126"></recognition>
       <recognition offset_seconds="45" travel_time="152"></recognition>
     </link>
     <link id="810502" data_source="1">
@@ -168,14 +170,12 @@ Each file contains finished passthroughs for each road segment during one minute
 
 - **6.5** years worth of data from January 2008 to June 2014
 - **3.9 million** XML files (525600 files per year)
-- **6.3** GB of compressed archives (with 7.5GB of additional CSV median data)
-- **42** GB of XML (and 13 GB of CSV)
-
----
-
-# Research questions
+- **6.3** GB of compressed archives (with 7.5GB of additional median data as CSV)
+- **42** GB of data as XML (and 13 GB as CSV)
 
 --
+
+## Potential research questions
 
 1. Does winter time have less recognitions (either due to less cars or snowy plates)?
 2. Do people drive faster during the night?
@@ -185,23 +185,22 @@ Each file contains finished passthroughs for each road segment during one minute
 
 ---
 
-# Prerequisites
-
---
-
-## Uploading the data to Amazon S3
-
-Data was given as monthly tar.gz archive files. We unpack the data and use AWS CLI tools to upload the XML files to S3.
+# Munging
 
 --
 
 ## The small files problem
 
-- We have approximately 4 million files.
-- "Small files are a big problem in Hadoop" [[1]](http://blog.cloudera.com/blog/2009/02/the-small-files-problem/) [[2]](http://amilaparanawithana.blogspot.fi/2012/06/small-file-problem-in-hadoop.html) [[3]](http://www.idryman.org/blog/2013/09/22/process-small-files-on-hadoop-using-combinefileinputformat-1/)
-- Concatenate data into bigger chunks
+- Unpacked the tar.gz archives and uploaded the XML files as such to S3 (using AWS [CLI tools](http://aws.amazon.com/cli/)).
+- Turns out small files with Hadoop is not fun [[1]](http://blog.cloudera.com/blog/2009/02/the-small-files-problem/) [[2]](http://amilaparanawithana.blogspot.fi/2012/06/small-file-problem-in-hadoop.html) [[3]](http://www.idryman.org/blog/2013/09/22/process-small-files-on-hadoop-using-combinefileinputformat-1/)
+- Turns out XML is not fun either
 
-Munging xml worth of 6,5 years takes 8,5 hours on a single t2.medium instance
+--
+
+## JSONify all the things!
+
+- Concatenate data into bigger chunks
+- Munging XML worth of 6.5 years takes 8.5 hours on a single t2.medium instance
 
 --
 
@@ -258,7 +257,6 @@ Munging xml worth of 6,5 years takes 8,5 hours on a single t2.medium instance
  - 30 days from June 2014
  - Execution time in AWS EMR 29 minutes
  - 30 mappers and 7 reducers
-
 
 Comparison to local parsing:
 

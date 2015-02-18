@@ -100,15 +100,13 @@ LongValueSum:hadoop    1
 
 ## Filesystems
 
-- EMR FS vs. Hadoop FS
-- EMR FS is an implementation of HDFS, with reading and writing of files directly to S3. 
-- HDFS should be used to cache results of intermediate steps. 
-- S3 and S3n
+- EMRFS is an implementation of HDFS, with reading and writing of files directly to S3. 
+- HDFS should be used to cache results of intermediate steps.
 - S3 is block-based just like HDFS. S3n is file based, which can be accessed with other tools, but filesize is limited to 5GB
 
 --
 
-- S3 is not a file system
+- S3 is not a file system, it is a RESTish object storage.
 - S3 has eventual consistency: files written to S3 might not be immediately available for reading. 
 - EMR FS can be configured to encrypt files in S3 and monitor consistancy of files, which can detect event that try to use inconsistant files.
 
@@ -434,10 +432,8 @@ result-analysis/05_speed_during_day/05-car-speed-for-time-of-day_output.py
 - We experimented with different input files an cluster sizes
 - Execution time was about half hour with small cluster and 30 small 15-20 MB files
 - Same input parsed with simple python script took about 5 minutes 
-
 - Larger cluster and 6 larger 500 MB files took 17 minutes.
-
-"Too small problem for EMR/Hadoop"
+- "Too small problem for EMR/Hadoop"
 
 ---
 

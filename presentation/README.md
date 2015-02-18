@@ -41,8 +41,8 @@ cat input_data.txt | mapper.py | reducer.py > output_data.txt
 ## [Amazon Elastic MapReduce](http://aws.amazon.com/elasticmapreduce/)
 
 - Hadoop-based MapReduce cluster as a service
-- In goes data and streaming programs, out comes more data
-- All this can be configured from web UI or through API
+- Can run either Amazon-optimized Hadoop or MapR
+- Managed from a web UI or through API
 
 --
 

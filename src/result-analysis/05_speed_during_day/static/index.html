@@ -31,8 +31,8 @@ var palette = new Rickshaw.Color.Palette({scheme: 'classic9'});
 new Rickshaw.Graph.Ajax( {
   element: document.getElementById('chart'),
   dataURL: '/data',
-  width: 1800,
-  height: 700,
+  width: 900,
+  height: 600,
   renderer: 'line',
   onData: function(d) {
     $.each(d.series, function(i, val) { 

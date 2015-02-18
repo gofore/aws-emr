@@ -181,8 +181,8 @@ Each file contains finished passthroughs for each road segment during one minute
 
 ## Potential research questions
 
-1. Does winter time have less recognitions (either due to less cars or snowy plates)?
-2. Do people drive faster during the night?
+1. Do people drive faster during the night?
+2. Does winter time have less recognitions (either due to less cars or snowy plates)?
 3. How well number of recognitions correlate with speed (rush hour probably slows travel, but are speeds higher during days with less traffic)?
 4. Is it possible to identify speed limits from the travel times? How much dispersion in speeds?
 5. When do speed limits change (winter and summer limits)?
@@ -196,14 +196,15 @@ Each file contains finished passthroughs for each road segment during one minute
 ## The small files problem
 
 - Unpacked the tar.gz archives and uploaded the XML files as such to S3 (using AWS [CLI tools](http://aws.amazon.com/cli/)).
-- Turns out small files with Hadoop is not fun [[1]](http://blog.cloudera.com/blog/2009/02/the-small-files-problem/) [[2]](http://amilaparanawithana.blogspot.fi/2012/06/small-file-problem-in-hadoop.html) [[3]](http://www.idryman.org/blog/2013/09/22/process-small-files-on-hadoop-using-combinefileinputformat-1/)
-- Turns out XML is not fun either
+- Turns out (4 million 11kB) small files with Hadoop is not fun. Hadoop does not handle well with files significantly smaller than the HDFS block size (default 64MB) [[1]](http://blog.cloudera.com/blog/2009/02/the-small-files-problem/) [[2]](http://amilaparanawithana.blogspot.fi/2012/06/small-file-problem-in-hadoop.html) [[3]](http://www.idryman.org/blog/2013/09/22/process-small-files-on-hadoop-using-combinefileinputformat-1/)
+- And well, XML is not fun either, so...
 
 --
 
 ## JSONify all the things!
 
-- Concatenate data into bigger chunks
+- Concatenated data into bigger files, calculated some extra data, and converted it into JSON. Size reduced to 60% of the original XML.
+- First munged 1-day files (10-20MB each) and later 1-month files (180-540MB each)
 - Munging XML worth of 6.5 years takes 8.5 hours on a single t2.medium instance
 
 --
@@ -230,6 +231,7 @@ Each file contains finished passthroughs for each road segment during one minute
     }]
 }
 </code></pre>
+Static link information (120kb json)
 
 --
 
@@ -267,15 +269,7 @@ Comparison to local parsing:
  - Data parsed in simple python
  - Execution time: 4 minutes 46 seconds
 
-
---
-
-
-## Parsing XML with Hadoop Streaming
-
-- [Hadoop Tutorial 2.1 -- Streaming XML Files](http://cs.smith.edu/dftwiki/index.php/Hadoop_Tutorial_2.1_--_Streaming_XML_Files)
-- Hadoop Streaming docs: [How do I parse XML documents using streaming?](http://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/HadoopStreaming.html#How_do_I_parse_XML_documents_using_streaming)
-- [Processing XML With Hadoop Streaming](http://davidvhill.com/article/processing-xml-with-hadoop-streaming)
+"Too small problem for EMR/Hadoop"
 
 ---
 
@@ -283,4 +277,16 @@ Comparison to local parsing:
 
 --
 
-[AWS EMR Best practices](https://media.amazonwebservices.com/AWS_Amazon_EMR_Best_Practices.pdf)
+## Takeaways
+
+- Make sure your problem is big enough for Hadoop
+- Munging wisely makes streaming programs easier and faster
+- Always use Spot instances with EMR
+
+--
+
+## Further reading
+
+- [AWS EMR Best practices](https://media.amazonwebservices.com/AWS_Amazon_EMR_Best_Practices.pdf)
+- Ubuntu MaaS blog: [Scaling a 2000-node Hadoop cluster on EC2](https://maas.ubuntu.com/2012/06/04/scaling-a-2000-node-hadoop-cluster-on-ec2ubuntu-with-juju/)
+- Big Data Borat: *["Quiz: Is it a Pokemon or a bigdata technology?"](http://www.slate.com/blogs/future_tense/2014/05/02/big_data_borat_tests_people_on_pok_mon_versus_big_data_technology_names.html)*

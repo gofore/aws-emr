@@ -204,6 +204,7 @@ Each file contains finished passthroughs for each road segment during one minute
 
 ## JSONify all the things!
 
+- Wrote scripts to parse, munge and upload data
 - Concatenated data into bigger files, calculated some extra data, and converted it into JSON. Size reduced to 60% of the original XML.
 - First munged 1-day files (10-20MB each) and later 1-month files (180-540MB each)
 - Munging XML worth of 6.5 years takes 8.5 hours on a single t2.medium instance
@@ -254,6 +255,72 @@ Static link information (120kb json)
   ]
 }
 </code></pre>
+
+---
+
+# Running EMR via boto
+
+--
+
+## Write a bunch of tools...
+
+- boto
+
+--
+
+## Step 1 of 2: Run mapreduce
+
+<pre><code data-trim="" class="bash">
+# Create new cluster
+aws-tools/run-jobs.py
+  create-cluster
+  "Car speed counting cluster"
+
+Starting cluster
+  j-F0K0A4Q9F5O0 Car speed counting cluster
+</code></pre>
+
+<pre><code data-trim="" class="bash">
+# Add job step to the cluster
+aws-tools/run-jobs.py
+  run-step
+  j-F0K0A4Q9F5O0
+  05-car-speed-for-time-of-day_map.py
+  digitraffic/munged/links-by-month/2014
+
+Step will output data to
+  s3://hadoop-seminar-emr/digitraffic/outputs/
+  2015-02-18_11-08-24_05-car-speed-for-time-of-day_map.py/
+</code></pre>
+
+--
+
+## Step 2 of 2: Analyze results
+
+<pre><code data-trim="" class="bash">
+# Download and concatenate output
+aws s3 cp 
+  s3://hadoop-seminar-emr/digitraffic/outputs/2015-02-18_11-08-24_05-car-speed-for-time-of-day_map.py/
+  /tmp/emr 
+  --recursive 
+  --profile hadoop-seminar-emr
+
+cat /tmp/emr/part-* > /tmp/emr/output
+</code></pre>
+<pre><code data-trim="" class="bash">
+# Analyze results
+result-analysis/05_speed_during_day/05-car-speed-for-time-of-day_output.py
+  /tmp/emr/output 
+  example-data/locationdata.json
+</code></pre>
+
+--
+
+![Average car speeds per time of day](/images/graphs.png)
+
+--
+
+![EC2 console](/images/ec2-console.png)
 
 --
 

@@ -91,7 +91,8 @@ for line in sys.stdin:
 ## Filesystems
 
 - EMR FS vs. Hadoop FS
-    - EMR FS is an implementation of HDFS, with reading and writing of files directly to S3.   
+    - EMR FS is an implementation of HDFS, with reading and writing of files directly to S3. 
+    - HDFS should be used to cache results of intermediate steps. 
 - S3 and S3n
 - S3 is not a file system
     - S3 has eventual consistency: files written to S3 might not be immediately available for reading. 

@@ -91,6 +91,7 @@ for line in sys.stdin:
 ## Filesystems
 
 - EMR FS vs. Hadoop FS
+    - EMR FS is an implementation of HDFS, with reading and writing of files directly to S3.   
 - S3 and S3n
 - S3 is not a file system
 

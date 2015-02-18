@@ -97,6 +97,7 @@ for line in sys.stdin:
     - S3 is block-based just like HDFS. S3n is file based, which can be accessed with other tools, but filesize is limited to 5GB  
 - S3 is not a file system
     - S3 has eventual consistency: files written to S3 might not be immediately available for reading. 
+- EMR FS can be configured to encrypt files in S3 and monitor consistancy of files, which can detect event that try to use inconsistant files.
 
 http://wiki.apache.org/hadoop/AmazonS3
 

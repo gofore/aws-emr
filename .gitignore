@@ -2,6 +2,7 @@ credentials.csv
 *.pem
 *.ppk
 .vagrant
+data/
 logs/
 temp/
 big-*

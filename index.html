@@ -9,6 +9,14 @@
         <link rel="stylesheet" href="presentation/dependencies/reveal.js-2.6.2/lib/css/monokai_sublime.css">
         <link rel="stylesheet" href="presentation/css/gofore.css">
         <link rel="stylesheet" href="presentation/css/custom.css">
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'presentation/dependencies/reveal.js-2.6.2/css/print/pdf.css' : 'presentation/dependencies/reveal.js-2.6.2/css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
 
     </head>
     <body>

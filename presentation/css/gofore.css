@@ -24,13 +24,23 @@ body {
 
 /* HEADERS */
 
-.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5 {
   color: #FF6013;
   text-transform: none;
 }
 
-.reveal h1 a, .reveal h2 a, .reveal h3 a, .reveal h4 a, .reveal h5 a, .reveal h6 a {
+/* Headings should always use heading color even if they contain links */
+.reveal h1 a, .reveal h2 a, .reveal h3 a, .reveal h4 a, .reveal h5 a {
   color: #FF6013;
+}
+
+/* H6 is reserved for authors on title slide */
+.reveal h6 {
+  margin: 200px 0 0 13%;
+  text-align: left;
+  text-transform: none;
+  color: #fff;
+  font-weight: normal;
 }
 
 /* OTHER */
@@ -43,7 +53,7 @@ body {
 
 .reveal pre code {
   padding: 15px;
-  background: #060606;
+  background: #040404;
   color: #f4f4f4;
 }
 
@@ -77,6 +87,11 @@ body {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.55); }
 
 /* NAVIGATION CONTROLS */
+
+.reveal .controls {
+  right: -4px;
+  bottom: -4px;
+}
 
 .reveal .controls div.navigate-left, .reveal .controls div.navigate-left.enabled {
   border-right-color: #703322; }

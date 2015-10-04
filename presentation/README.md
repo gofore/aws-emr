@@ -1,7 +1,7 @@
 
-# Amazon Elastic MapReduce
+# Elastic MapReduce
 
-Ville Seppänen [@Vilsepi](https://twitter.com/Vilsepi) | Jari Voutilainen [@Zharktas](https://twitter.com/Zharktas) | [@GoforeOy](https://twitter.com/GoforeOy)
+###### Ville Seppänen [@Vilsepi](https://twitter.com/Vilsepi)<br>Jari Voutilainen [@Zharktas](https://twitter.com/Zharktas)<br>[@GoforeOy](https://twitter.com/GoforeOy)
 
 ---
 
@@ -20,16 +20,16 @@ All presentation material is available at [https://github.com/gofore/aws-emr](ht
 
 - Utility that allows you to create and run Map/Reduce jobs with any executable or script as the mapper and/or the reducer.
 
-<pre><code data-trim="" class="shell">
-$HADOOP_HOME/bin/hadoop jar $HADOOP_HOME/hadoop-streaming.jar \
-    -input   my/Input/Directories \
-    -output  my/Output/Directory  \
-    -mapper  myMapperProgram.py   \
-    -reducer myReducerProgram.py
+<pre><code data-trim class="java">
+    cat input_data.txt | mapper.py | reducer.py > output_data.txt
 </code></pre>
 
 <pre><code data-trim="" class="shell">
-cat input_data.txt | mapper.py | reducer.py > output_data.txt
+hadoop jar $HADOOP_HOME/hadoop-streaming.jar \
+       -input   myInputDataDirectories \
+       -output  myOutputDataDirectory \
+       -mapper  myMapperProgram.py \
+       -reducer myReducerProgram.py
 </code></pre>
 
 ---
@@ -399,7 +399,7 @@ Step will output data to
 
 ## Step 2 of 2: Analyze results
 
-<pre><code data-trim="" class="bash">
+<pre><code data-trim="" class="none">
 # Download and concatenate output
 aws s3 cp 
   s3://hadoop-seminar-emr/digitraffic/outputs/2015-02-18_11-08-24_05-car-speed-for-time-of-day_map.py/

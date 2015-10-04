@@ -12,8 +12,6 @@
 3. Introduction to our dataset
 4. Using EMR from command line with boto
 
-All presentation material is available at [https://github.com/gofore/aws-emr](https://github.com/gofore/aws-emr)
-
 ---
 
 ## Hadoop Streaming
@@ -34,11 +32,11 @@ hadoop jar $HADOOP_HOME/hadoop-streaming.jar \
 
 ---
 
-# Elastic MapReduce (EMR)
+# Elastic MapReduce
 
 --
 
-## [Amazon Elastic MapReduce](http://aws.amazon.com/elasticmapreduce/)
+## [Amazon Elastic MapReduce (EMR)](http://aws.amazon.com/elasticmapreduce/)
 
 - Hadoop-based MapReduce cluster as a service
 - Can run either Amazon-optimized Hadoop or MapR
@@ -159,22 +157,22 @@ http://wiki.apache.org/hadoop/AmazonS3
 
 ```
 <ivjtdata duration="60" periodstart="2014-06-24T02:55:00Z">
-  <recognitions>
-    <link id="110302" data_source="1">
-      <recognition offset_seconds="8"  travel_time="152"></recognition>
-      <recognition offset_seconds="36" travel_time="155"></recognition>
+  <vehicle-recognitions>
+    <link id="110302" data-source="1">
+      <recognition offset="8"  travel-time="152"></recognition>
+      <recognition offset="36" travel-time="155"></recognition>
     </link>
-    <link id="410102" data_source="1">
-      <recognition offset_seconds="6"  travel_time="126"></recognition>
-      <recognition offset_seconds="45" travel_time="152"></recognition>
+    <link id="410102" data-source="1">
+      <recognition offset="6"  travel-time="126"></recognition>
+      <recognition offset="45" travel-time="152"></recognition>
     </link>
-    <link id="810502" data_source="1">
-      <recognition offset_seconds="25" travel_time="66"></recognition>
-      <recognition offset_seconds="34" travel_time="79"></recognition>
-      <recognition offset_seconds="35" travel_time="67"></recognition>
-      <recognition offset_seconds="53" travel_time="58"></recognition>
+    <link id="810502" data-source="1">
+      <recognition offset="25" travel-time="66"></recognition>
+      <recognition offset="34" travel-time="79"></recognition>
+      <recognition offset="35" travel-time="67"></recognition>
+      <recognition offset="53" travel-time="58"></recognition>
     </link>
-  </recognitions>
+  </vehicle-recognitions>
 </ivjtdata>
 ```
 
@@ -288,7 +286,7 @@ Static link information (120kb json)
 import boto.emr
 from boto.emr.instance_group import InstanceGroup
 
-# Requires that AWS API credentials have been exported as env variables
+# Requires AWS API credentials exported as env variables
 connection = boto.emr.connect_to_region('eu-west-1')
 </code></pre>
 
@@ -323,7 +321,7 @@ cluster_id = connection.run_jobflow(
     action_on_failure='CANCEL_AND_WAIT',
     keep_alive=True,
     enable_debugging=True,
-    log_uri="s3://our-s3-bucket/logs/",
+    log_uri="s3://bucket/logs/",
     ami_version="3.3.1",
     bootstrap_actions=[],
     ec2_keyname="name-of-our-ssh-key",
@@ -340,13 +338,13 @@ cluster_id = connection.run_jobflow(
 steps = []
 steps.append(boto.emr.step.StreamingStep(
     "Our awesome streaming app",
-    input="s3://our-s3-bucket/our-input-data",
-    output="s3://our-s3-bucket/our-output-path/",
+    input="s3://bucket/our-input-data",
+    output="s3://bucket/our-output-path/",
     mapper="our-mapper.py",
     reducer="aggregate",
     cache_files=[
-        "s3://our-s3-bucket/programs/our-mapper.py#our-mapper.py",
-        "s3://our-s3-bucket/data/our-dictionary.json#our-dictionary.json",)
+        "s3://bucket/programs/our-mapper.py#our-mapper.py",
+        "s3://bucket/data/our-dictionary.json#our-dictionary.json",)
         ],
     action_on_failure='CANCEL_AND_WAIT',
     jar='/home/hadoop/contrib/streaming/hadoop-streaming.jar'))
@@ -387,22 +385,21 @@ Starting cluster
 aws-tools/run-jobs.py
   run-step
   j-F0K0A4Q9F5O0
-  05-car-speed-for-time-of-day_map.py
+  carspeeds.py
   digitraffic/munged/links-by-month/2014
 
 Step will output data to
-  s3://hadoop-seminar-emr/digitraffic/outputs/
-  2015-02-18_11-08-24_05-car-speed-for-time-of-day_map.py/
+  s3://hadoop-seminar-emr/digitraffic/outputs/carspeeds.py/
 </code></pre>
 
 --
 
 ## Step 2 of 2: Analyze results
 
-<pre><code data-trim="" class="none">
+<pre><code data-trim="" class="python">
 # Download and concatenate output
 aws s3 cp 
-  s3://hadoop-seminar-emr/digitraffic/outputs/2015-02-18_11-08-24_05-car-speed-for-time-of-day_map.py/
+  s3://hadoop-seminar-emr/digitraffic/outputs/carspeeds.py/
   /tmp/emr 
   --recursive 
   --profile hadoop-seminar-emr
@@ -412,7 +409,7 @@ cat /tmp/emr/part-* > /tmp/emr/output
 
 <pre><code data-trim="" class="bash">
 # Analyze results
-result-analysis/05_speed_during_day/05-car-speed-for-time-of-day_output.py
+05-car-speed-for-time-of-day_output.py
   /tmp/emr/output 
   example-data/locationdata.json
 </code></pre>
@@ -451,7 +448,8 @@ result-analysis/05_speed_during_day/05-car-speed-for-time-of-day_output.py
 
 ## Further reading
 
+- All presentation material is available at [https://github.com/gofore/aws-emr](https://github.com/gofore/aws-emr)
 - [Amazon EMR Developer Guide](http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-what-is-emr.html)
 - [Amazon EMR Best practices](https://media.amazonwebservices.com/AWS_Amazon_EMR_Best_Practices.pdf)
-- Ubuntu MaaS blog: [Scaling a 2000-node Hadoop cluster on EC2](https://maas.ubuntu.com/2012/06/04/scaling-a-2000-node-hadoop-cluster-on-ec2ubuntu-with-juju/)
-- Big Data Borat: *["Quiz: Is it a Pokemon or a bigdata technology?"](http://www.slate.com/blogs/future_tense/2014/05/02/big_data_borat_tests_people_on_pok_mon_versus_big_data_technology_names.html)*
+- [Scaling a 2000-node Hadoop cluster on EC2](https://maas.ubuntu.com/2012/06/04/scaling-a-2000-node-hadoop-cluster-on-ec2ubuntu-with-juju/)
+- ["Quiz: Is it a Pokemon or a bigdata technology?"](http://www.slate.com/blogs/future_tense/2014/05/02/big_data_borat_tests_people_on_pok_mon_versus_big_data_technology_names.html)

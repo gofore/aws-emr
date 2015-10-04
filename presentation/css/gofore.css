@@ -55,6 +55,7 @@ body {
   padding: 15px;
   background: #040404;
   color: #f4f4f4;
+  max-height: 500px;
 }
 
 /* LINKS */

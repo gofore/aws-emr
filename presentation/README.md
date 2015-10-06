@@ -8,15 +8,15 @@
 ## Agenda
 
 1. Introduction to Hadoop Streaming and Elastic MapReduce
-2. Simple EMR web interface demo
-3. Introduction to our dataset
-4. Using EMR from command line with boto
+2. Simple Elastic MapReduce demo
+3. More complex case and preprocessing of data
+4. Programming with Elastic MapReduce
 
 ---
 
-## Hadoop Streaming
+## [Hadoop Streaming](http://hadoop.apache.org/docs/current/hadoop-streaming/HadoopStreaming.html)
 
-- Utility that allows you to create and run Map/Reduce jobs with any executable or script as the mapper and/or the reducer.
+Utility that allows running MapReduce jobs with any executable or script as the mapper and/or the reducer
 
 <pre><code data-trim class="java">
     cat input_data.txt | mapper.py | reducer.py > output_data.txt
@@ -38,8 +38,8 @@ hadoop jar $HADOOP_HOME/hadoop-streaming.jar \
 
 ## [Amazon Elastic MapReduce (EMR)](http://aws.amazon.com/elasticmapreduce/)
 
-- Hadoop-based MapReduce cluster as a service
-- Can run either Amazon-optimized Hadoop or MapR
+- MapReduce cluster as a service
+- Can run either Amazon-optimized Hadoop or [MapR](https://www.mapr.com/)
 - Managed from a web UI or through API
 
 --
@@ -94,6 +94,10 @@ LongValueSum:with      1
 LongValueSum:hadoop    1
 </code></pre>
 
+---
+
+# Importing data
+
 --
 
 ## Filesystems
@@ -112,7 +116,7 @@ http://wiki.apache.org/hadoop/AmazonS3
 
 ---
 
-# Our dataset
+# Digitraffic dataset
 
 --
 
@@ -290,6 +294,8 @@ from boto.emr.instance_group import InstanceGroup
 connection = boto.emr.connect_to_region('eu-west-1')
 </code></pre>
 
+1 of 4
+
 --
 
 ### Specify EC2 instances
@@ -310,6 +316,8 @@ instance_groups.append(InstanceGroup(
     market="SPOT", bidprice=0.012))
 </code></pre>
 
+2 of 4
+
 --
 
 ### Start EMR cluster
@@ -329,6 +337,8 @@ cluster_id = connection.run_jobflow(
     job_flow_role="EMR_EC2_DefaultRole",
     service_role="EMR_DefaultRole")
 </code></pre>
+
+3 of 4
 
 --
 
@@ -351,18 +361,23 @@ steps.append(boto.emr.step.StreamingStep(
 connection.add_jobflow_steps(cluster_id, steps)
 </code></pre>
 
+4 of 4
+
 --
 
 ### Recap
 
 <pre><code data-trim="" class="python">
-#!/usr/bin/env python
-
 import boto.emr
 from boto.emr.instance_group import InstanceGroup
 
+# Create a connection to AWS
 connection = boto.emr.connect_to_region('eu-west-1')
+
+# Create a new EMR cluster
 cluster_id = connection.run_jobflow(**cluster_parameters)
+
+# Add steps to the cluster
 connection.add_jobflow_steps(cluster_id, **steps_parameters)
 </code></pre>
 
@@ -448,8 +463,10 @@ cat /tmp/emr/part-* > /tmp/emr/output
 
 ## Further reading
 
-- All presentation material is available at [https://github.com/gofore/aws-emr](https://github.com/gofore/aws-emr)
+Presentation and source code are available at  
+[https://github.com/gofore/aws-emr](https://github.com/gofore/aws-emr)
+
 - [Amazon EMR Developer Guide](http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-what-is-emr.html)
 - [Amazon EMR Best practices](https://media.amazonwebservices.com/AWS_Amazon_EMR_Best_Practices.pdf)
 - [Scaling a 2000-node Hadoop cluster on EC2](https://maas.ubuntu.com/2012/06/04/scaling-a-2000-node-hadoop-cluster-on-ec2ubuntu-with-juju/)
-- ["Quiz: Is it a Pokemon or a bigdata technology?"](http://www.slate.com/blogs/future_tense/2014/05/02/big_data_borat_tests_people_on_pok_mon_versus_big_data_technology_names.html)
+- [Quiz: Is it a Pokemon or a bigdata technology?](http://www.slate.com/blogs/future_tense/2014/05/02/big_data_borat_tests_people_on_pok_mon_versus_big_data_technology_names.html)

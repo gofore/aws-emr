@@ -18,6 +18,7 @@ fi
 
 if [ -f "$FILE" ]
 then
+  CSV_USERNAME=`tail -n +2 $FILE|cut -d , -f 1`
   CSV_ACCESS_KEY=`tail -n +2 $FILE|cut -d , -f 2`
   CSV_SECRET_KEY=`tail -n +2 $FILE|cut -d , -f 3`
 
@@ -26,6 +27,8 @@ then
   export AWS_SECRET_KEY=$CSV_SECRET_KEY
   export AWS_SECRET_ACCESS_KEY=$CSV_SECRET_KEY
 
+  echo "IAM Credentials for user $CSV_USERNAME and key $AWS_ACCESS_KEY exported as environment variables"
+
 else
-	echo "File $FILE does not exists"
+  echo "File $FILE does not exist"
 fi

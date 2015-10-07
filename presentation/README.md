@@ -102,14 +102,14 @@ LongValueSum:hadoop    1
 
 ## Filesystems
 
-- EMRFS is an implementation of HDFS, with reading and writing of files directly to S3. 
+- EMRFS is an implementation of HDFS, with reading and writing of files directly to S3.
 - HDFS should be used to cache results of intermediate steps.
 - S3 is block-based just like HDFS. S3n is file based, which can be accessed with other tools, but filesize is limited to 5GB
 
 --
 
 - S3 is not a file system, it is a RESTish object storage.
-- S3 has eventual consistency: files written to S3 might not be immediately available for reading. 
+- S3 has eventual consistency: files written to S3 might not be immediately available for reading.
 - EMR FS can be configured to encrypt files in S3 and monitor consistancy of files, which can detect event that try to use inconsistant files.
 
 http://wiki.apache.org/hadoop/AmazonS3
@@ -413,10 +413,10 @@ Step will output data to
 
 <pre><code data-trim="" class="python">
 # Download and concatenate output
-aws s3 cp 
+aws s3 cp
   s3://hadoop-seminar-emr/digitraffic/outputs/carspeeds.py/
-  /tmp/emr 
-  --recursive 
+  /tmp/emr
+  --recursive
   --profile hadoop-seminar-emr
 
 cat /tmp/emr/part-* > /tmp/emr/output
@@ -425,7 +425,7 @@ cat /tmp/emr/part-* > /tmp/emr/output
 <pre><code data-trim="" class="bash">
 # Analyze results
 05-car-speed-for-time-of-day_output.py
-  /tmp/emr/output 
+  /tmp/emr/output
   example-data/locationdata.json
 </code></pre>
 
@@ -439,12 +439,11 @@ cat /tmp/emr/part-* > /tmp/emr/output
 
 --
 
-## Some statistics
+## Conclusions about the dataset
 
-- We experimented with different input files an cluster sizes
-- Execution time was about half hour with small cluster and 30 small 15-20 MB files
-- Same input parsed with simple python script took about 5 minutes 
-- Larger cluster and 6 larger 500 MB files took 17 minutes.
+- We only used subset of whole dataset due to interest in EMR instead of analyzing the data
+- EMR/Hadoop creates overhead which are substantial with small files
+- Even after munging files together, our subset took considerably longer in EMR compared to local parsing
 - "Too small problem for EMR/Hadoop"
 
 ---

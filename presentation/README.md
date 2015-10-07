@@ -10,7 +10,7 @@
 1. Introduction to Hadoop Streaming and Elastic MapReduce
 2. Simple Elastic MapReduce demo
 3. More complex case and preprocessing of data
-4. Programming with Elastic MapReduce
+4. Programming Elastic MapReduce
 
 ---
 
@@ -39,8 +39,9 @@ hadoop jar $HADOOP_HOME/hadoop-streaming.jar \
 ## [Amazon Elastic MapReduce (EMR)](http://aws.amazon.com/elasticmapreduce/)
 
 - MapReduce cluster as a service
-- Can run either Amazon-optimized Hadoop or [MapR](https://www.mapr.com/)
-- Managed from a web UI or through API
+- Managed via a web interface or API
+- Can run either Amazon-optimized [Hadoop](https://docs.aws.amazon.com/ElasticMapReduce/latest/ReleaseGuide/emr-hadoop.html) or [MapR](https://www.mapr.com/)
+- [Pre-installed](https://docs.aws.amazon.com/ElasticMapReduce/latest/ReleaseGuide/emr-release-components.html) Hive, Pig, Spark, Hue, Mahout, Presto...
 
 --
 
@@ -48,9 +49,34 @@ hadoop jar $HADOOP_HOME/hadoop-streaming.jar \
 
 ![EMR and S3](/images/streaming-in-emr.png)
 
+--
+
+### For each cluster
+
+- Hadoop version and pre-installed applications
+- Computing capacity
+- List of work [*steps*](http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-steps.html)
+
+*Step is a unit of work submitted to the cluster. It might contain Hadoop job(s) or instructions to install an application.*
+
+### For each Streaming step
+
+- Mapper and reducer program locations
+- Data input and output locations
+
+--
+
+![Cluster creation wizard](/images/create_cluster_quick.png)
+
+--
+
+
+
+Cluster -> Step -> Job -> Task -> Attempt
+
 ---
 
-# Quick EMR demo
+# Streaming demo
 
 --
 
@@ -190,16 +216,6 @@ Each file contains finished passthroughs for each road segment during one minute
 - **3.9 million** XML files (525600 files per year)
 - **6.3** GB of compressed archives (with 7.5GB of additional median data as CSV)
 - **42** GB of data as XML (and 13 GB as CSV)
-
---
-
-## Potential research questions
-
-1. Do people drive faster during the night?
-2. Does winter time have less recognitions (either due to less cars or snowy plates)?
-3. How well number of recognitions correlate with speed (rush hour probably slows travel, but are speeds higher during days with less traffic)?
-4. Is it possible to identify speed limits from the travel times? How much dispersion in speeds?
-5. When do speed limits change (winter and summer limits)?
 
 ---
 
@@ -342,7 +358,7 @@ cluster_id = connection.run_jobflow(
 
 --
 
-### Add job step to cluster
+### Add work step to cluster
 
 <pre><code data-trim="" class="python">
 steps = []

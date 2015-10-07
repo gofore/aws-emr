@@ -7,11 +7,11 @@
 
 ## Gofore Oy
 
-- Tampere based software company.
-- Offices in Tampere and Helsinki.
-- 120 employees.
-- Mostly public sector software projects with exceptions like Fonecta.
-- Constantly recruiting.
+- Tampere based software company
+- Offices in Tampere and Helsinki
+- 120 employees
+- Mostly public sector software projects with exceptions like Fonecta
+- Constantly [recruiting](http://gofore.com/liity-joukkoon/)
 
 ---
 

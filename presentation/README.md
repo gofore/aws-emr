@@ -251,10 +251,10 @@ Each file contains finished passthroughs for each road segment during one minute
 
 ## JSONify all the things!
 
-- Wrote scripts to parse, munge and upload data
-- Concatenated data into bigger files, calculated some extra data, and converted it into JSON. Size reduced to 60% of the original XML.
-- First munged 1-day files (10-20MB each) and later 1-month files (180-540MB each)
-- Munging XML worth of 6.5 years takes 8.5 hours on a single t2.medium instance
+- Wrote scripts to parse XML, munge and upload JSON data
+- Concatenated data into one-month files (180-540MB each)
+- In the concatenated file, each line is a valid JSON object. Mapper processes one line, one object at a time.
+- Munging XML worth of 6.5 years takes 8.5 hours on a single t2.medium instance. Size reduced to 60% of the original XML.
 
 --
 
@@ -292,15 +292,14 @@ Static link information (120kb json)
       "id": "4510201",
       "tt": 117,
       "cars": 4,
-      "itts": [
-        100,
-        139,
-        121,
-        110
-      ]
-    }
+      "itts": [100, 139, 121, 110, ...]
+    },
+    { ... }, { ... }, ...
   ]
 }
+
+This object is actually a single line in the munged data.
+Formatted for readability.
 </code></pre>
 
 ---

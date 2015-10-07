@@ -7,11 +7,10 @@
 
 ## Gofore Oy
 
-- Tampere based software company
+- Tampere-based software company
 - Offices in Tampere and Helsinki
-- 120 employees
-- Mostly public sector software projects with exceptions like Fonecta
-- Constantly [recruiting](http://gofore.com/liity-joukkoon/)
+- Mostly public sector customers with exceptions like Fonecta
+- 120+ employees, constantly [recruiting](http://gofore.com/liity-joukkoon/)
 
 ---
 
@@ -29,7 +28,7 @@
 Utility that allows running MapReduce jobs with any executable or script as the mapper and/or the reducer
 
 <pre><code data-trim class="java">
-    cat input_data.txt | mapper.py | reducer.py > output_data.txt
+    cat input_data.txt | mapper.py | sort | reducer.py > output_data.txt
 </code></pre>
 
 <pre><code data-trim="" class="shell">

@@ -96,19 +96,6 @@ Cluster -> Step -> Job -> Task -> Attempt
 
 --
 
-## Cluster creation steps
-
-- Cluster: name, logging
-- Tags: keywords for the cluster
-- **Software:** Hadoop distribution and version, pre-installed applications (Hive, Pig,...)
-- File System: encryption, consistency
-- **Hardware:** number and type of instances
-- Security and Access: ssh keys, node access roles
-- Bootstrap Actions: scripts to customize the cluster
-- **Steps:** a queue of mapreduce jobs for the cluster
-
---
-
 ## [WordSplitter.py](https://s3.amazonaws.com/elasticmapreduce/samples/wordcount/wordSplitter.py) (mapper)
 
 <pre><code data-trim="" class="python">
@@ -129,6 +116,28 @@ LongValueSum:words     1
 LongValueSum:with      1
 LongValueSum:hadoop    1
 </code></pre>
+
+--
+
+## Hardware instance groups
+
+- **Master**: Node that manages the cluster (*e.g. runs YARN ResourceManager and HDFS NameNode services*)
+- **Core**: Nodes that run tasks and store HDFS data. Cannot be removed from the cluster.
+- **Task**: Optional nodes that run tasks, but do not store HDFS data. Can be flexibly added and removed.
+
+Task nodes are ideal for using [EC2 Spot pricing](https://aws.amazon.com/ec2/spot/).
+
+--
+
+## Advanced options
+
+- Logging, debugging
+- Tags: keywords for the cluster resources
+- Additional applications and configuration
+- Filesystem: encryption, consistency
+- Number and type of nodes, spot price
+- Security and Access: SSH keys, node access roles
+- Bootstrap actions: scripts to customize the cluster
 
 ---
 

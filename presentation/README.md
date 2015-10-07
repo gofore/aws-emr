@@ -78,12 +78,6 @@ hadoop jar $HADOOP_HOME/hadoop-streaming.jar \
 
 ![Cluster creation wizard](/images/create_cluster_quick.png)
 
---
-
-
-
-Cluster -> Step -> Job -> Task -> Attempt
-
 ---
 
 # Streaming demo

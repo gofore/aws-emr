@@ -5,15 +5,6 @@
 
 ---
 
-## Gofore Oy
-
-- Tampere-based software company
-- Offices in Tampere and Helsinki
-- Mostly public sector customers with exceptions like Fonecta
-- 120+ employees, constantly [recruiting](http://gofore.com/liity-joukkoon/)
-
----
-
 ## Agenda
 
 1. Introduction to Hadoop Streaming and Elastic MapReduce
@@ -85,11 +76,16 @@ hadoop jar $HADOOP_HOME/hadoop-streaming.jar \
 
 ![Say 'word count' one more time](/images/word_count_meme.jpg)
 
-[The endlessly fascinating example of counting words in Hadoop](http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-get-started-count-words.html)
+[The endlessly fascinating example of counting words in Hadoop](http://aws.amazon.com/articles/Elastic-MapReduce/2273)
+[Getting started tutoria](http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-get-started.html)
 
 --
 
 ## [WordSplitter.py](https://s3.amazonaws.com/elasticmapreduce/samples/wordcount/wordSplitter.py) (mapper)
+
+[Mapper](s3://elasticmapreduce/samples/wordcount/wordSplitter.py)
+
+[Input](s3://elasticmapreduce/samples/wordcount/input/)
 
 <pre><code data-trim="" class="python">
 #!/usr/bin/python
